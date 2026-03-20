@@ -1,26 +1,24 @@
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.LinkedList;
 
 public class Main {
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
-        Set<String> bogieSet = new HashSet<>();
+        LinkedList<String> consist = new LinkedList<>();
 
-        System.out.println("Enter number of bogies:");
-        int n = sc.nextInt();
-        sc.nextLine();
+        consist.add("Engine");
+        consist.add("Sleeper");
+        consist.add("AC");
+        consist.add("Cargo");
+        consist.add("Guard");
 
-        for (int i = 0; i < n; i++) {
-            System.out.println("Enter Bogie ID:");
-            String id = sc.nextLine();
-            bogieSet.add(id);
-        }
+        consist.add(2, "Pantry Car");
 
-        System.out.println("Unique Bogie IDs:");
-        for (String id : bogieSet) {
-            System.out.println(id);
+        consist.removeFirst();
+        consist.removeLast();
+
+        System.out.println("Final Train Consist:");
+        for (String bogie : consist) {
+            System.out.println(bogie);
         }
     }
 }
