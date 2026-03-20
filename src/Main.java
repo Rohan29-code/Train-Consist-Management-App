@@ -1,29 +1,26 @@
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
 
-        ArrayList<String> bogies = new ArrayList<>();
+        Scanner sc = new Scanner(System.in);
+        Set<String> bogieSet = new HashSet<>();
 
-        bogies.add("Sleeper");
-        bogies.add("AC Chair");
-        bogies.add("First Class");
+        System.out.println("Enter number of bogies:");
+        int n = sc.nextInt();
+        sc.nextLine();
 
-        System.out.println("Bogies after adding:");
-        System.out.println(bogies);
-
-        bogies.remove("AC Chair");
-
-        System.out.println("\nBogies after removal:");
-        System.out.println(bogies);
-
-        if (bogies.contains("Sleeper")) {
-            System.out.println("\nSleeper bogie exists in the train.");
-        } else {
-            System.out.println("\nSleeper bogie does not exist.");
+        for (int i = 0; i < n; i++) {
+            System.out.println("Enter Bogie ID:");
+            String id = sc.nextLine();
+            bogieSet.add(id);
         }
 
-        System.out.println("\nFinal Bogie List:");
-        System.out.println(bogies);
+        System.out.println("Unique Bogie IDs:");
+        for (String id : bogieSet) {
+            System.out.println(id);
+        }
     }
 }
