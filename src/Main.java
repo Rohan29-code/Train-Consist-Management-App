@@ -26,7 +26,6 @@ public class Main {
 
         System.out.println("=== Train Consist Management App ===");
 
-        // Bogie List
         List<Bogie> bogies = new ArrayList<>();
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 56));
@@ -34,11 +33,11 @@ public class Main {
         bogies.add(new Bogie("Executive AC", 80));
         bogies.add(new Bogie("Sleeper", 65));
 
-        // 🔹 Original List
+        // Original List
         System.out.println("\nOriginal Bogie List:");
         bogies.forEach(System.out::println);
 
-        // 🔹 UC8: Filtering (capacity > 60)
+        // UC8: Filtering
         List<Bogie> filteredBogies = bogies.stream()
                 .filter(b -> b.capacity > 60)
                 .collect(Collectors.toList());
@@ -46,7 +45,7 @@ public class Main {
         System.out.println("\nFiltered Bogies (Capacity > 60):");
         filteredBogies.forEach(System.out::println);
 
-        // 🔹 UC9: Grouping by type
+        // UC9: Grouping
         Map<String, List<Bogie>> groupedBogies =
                 bogies.stream()
                         .collect(Collectors.groupingBy(Bogie::getType));
@@ -56,5 +55,12 @@ public class Main {
             System.out.println("Type: " + type);
             groupedBogies.get(type).forEach(b -> System.out.println("  " + b));
         }
+
+        // UC10: Reduce (Total Seats)
+        int totalSeats = bogies.stream()
+                .map(b -> b.capacity)
+                .reduce(0, Integer::sum);
+
+        System.out.println("\nTotal Seating Capacity: " + totalSeats);
     }
 }
