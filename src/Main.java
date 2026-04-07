@@ -1,21 +1,43 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+
+class Bogie {
+    String name;
+    int capacity;
+
+    public Bogie(String name, int capacity) {
+        this.name = name;
+        this.capacity = capacity;
+    }
+
+    @Override
+    public String toString() {
+        return name + " (" + capacity + ")";
+    }
+}
 
 public class Main {
+
     public static void main(String[] args) {
 
-        Map<String, Integer> bogieCapacityMap = new HashMap<>();
+        System.out.println("=== Train Consist Management App: UC8 - Stream Filtering ===");
 
-        bogieCapacityMap.put("Sleeper", 72);
-        bogieCapacityMap.put("AC Chair", 78);
-        bogieCapacityMap.put("First Class", 24);
-        bogieCapacityMap.put("Rectangular Goods", 100);
-        bogieCapacityMap.put("Cylindrical Goods", 120);
+        // Reusing bogies from UC7
+        List<Bogie> bogies = new ArrayList<>();
+        bogies.add(new Bogie("Sleeper", 72));
+        bogies.add(new Bogie("AC Chair", 56));
+        bogies.add(new Bogie("First Class", 48));
+        bogies.add(new Bogie("Executive AC", 80));
 
-        System.out.println("Train Bogie Capacity Details:");
+        System.out.println("\nOriginal Bogie List:");
+        bogies.forEach(System.out::println);
 
-        for (Map.Entry<String, Integer> entry : bogieCapacityMap.entrySet()) {
-            System.out.println("Bogie: " + entry.getKey() + " | Capacity: " + entry.getValue());
-        }
+        // Filtering using Stream: capacity > 60
+        List<Bogie> filteredBogies = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
+
+        System.out.println("\nFiltered Bogies (Capacity > 60):");
+        filteredBogies.forEach(System.out::println);
     }
 }
