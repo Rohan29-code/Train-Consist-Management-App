@@ -26,7 +26,6 @@ public class Main {
 
         System.out.println("=== Train Consist Management App ===");
 
-        // 🔹 Bogie List (reuse from UC7/UC8/UC9)
         List<Bogie> bogies = new ArrayList<>();
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 56));
@@ -34,32 +33,33 @@ public class Main {
         bogies.add(new Bogie("Executive AC", 80));
         bogies.add(new Bogie("Sleeper", 65));
 
-        // 🔹 Original List
+        // Original List
         System.out.println("\nOriginal Bogie List:");
         bogies.forEach(System.out::println);
 
-        // 🔹 UC8: Filtering
-        List<Bogie> filtered = bogies.stream()
+        // UC8: Filtering
+        List<Bogie> filteredBogies = bogies.stream()
                 .filter(b -> b.capacity > 60)
                 .collect(Collectors.toList());
 
         System.out.println("\nFiltered Bogies (Capacity > 60):");
-        filtered.forEach(System.out::println);
+        filteredBogies.forEach(System.out::println);
 
-        // 🔹 UC9: Grouping
-        Map<String, List<Bogie>> grouped =
+        // UC9: Grouping
+        Map<String, List<Bogie>> groupedBogies =
                 bogies.stream()
                         .collect(Collectors.groupingBy(Bogie::getType));
 
-        System.out.println("\nGrouped Bogies:");
-        grouped.forEach((type, list) -> {
-            System.out.println(type + ": " + list);
-        });
+        System.out.println("\nGrouped Bogies by Type:");
+        for (String type : groupedBogies.keySet()) {
+            System.out.println("Type: " + type);
+            groupedBogies.get(type).forEach(b -> System.out.println("  " + b));
+        }
 
-        // 🔹 UC10: Reduce (TOTAL SEATS)
+        // UC10: Reduce (Total Seats)
         int totalSeats = bogies.stream()
-                .map(b -> b.capacity)      // extract capacity
-                .reduce(0, Integer::sum);  // sum all
+                .map(b -> b.capacity)
+                .reduce(0, Integer::sum);
 
         System.out.println("\nTotal Seating Capacity: " + totalSeats);
     }
