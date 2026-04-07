@@ -1,11 +1,11 @@
 import java.util.*;
-import java.util.stream.*;
+import java.util.stream.Collectors;
 
 class Bogie {
     String type;
     int capacity;
 
-    Bogie(String type, int capacity) {
+    public Bogie(String type, int capacity) {
         this.type = type;
         this.capacity = capacity;
     }
@@ -14,43 +14,53 @@ class Bogie {
         return type;
     }
 
+    @Override
     public String toString() {
-        return type + " Bogie - Capacity: " + capacity;
+        return type + " (" + capacity + ")";
     }
 }
 
 public class Main {
+
     public static void main(String[] args) {
 
-        // Reusing Bogie list (like UC7/UC8)
+        System.out.println("=== Train Consist Management App ===");
+
+        // 🔹 Bogie List (reuse from UC7/UC8/UC9)
         List<Bogie> bogies = new ArrayList<>();
         bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 60));
-        bogies.add(new Bogie("First Class", 50));
-        bogies.add(new Bogie("Sleeper", 80));
-        bogies.add(new Bogie("AC Chair", 65));
+        bogies.add(new Bogie("AC Chair", 56));
+        bogies.add(new Bogie("First Class", 48));
+        bogies.add(new Bogie("Executive AC", 80));
+        bogies.add(new Bogie("Sleeper", 65));
 
-        // 🔹 UC9: Grouping using Stream
-        Map<String, List<Bogie>> groupedBogies =
+        // 🔹 Original List
+        System.out.println("\nOriginal Bogie List:");
+        bogies.forEach(System.out::println);
+
+        // 🔹 UC8: Filtering
+        List<Bogie> filtered = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
+
+        System.out.println("\nFiltered Bogies (Capacity > 60):");
+        filtered.forEach(System.out::println);
+
+        // 🔹 UC9: Grouping
+        Map<String, List<Bogie>> grouped =
                 bogies.stream()
-                        .collect(Collectors.groupingBy(b -> b.getType()));
+                        .collect(Collectors.groupingBy(Bogie::getType));
 
-        // 🔹 Display grouped result
-        System.out.println("Grouped Bogies by Type:\n");
+        System.out.println("\nGrouped Bogies:");
+        grouped.forEach((type, list) -> {
+            System.out.println(type + ": " + list);
+        });
 
-        for (String type : groupedBogies.keySet()) {
-            System.out.println("Type: " + type);
+        // 🔹 UC10: Reduce (TOTAL SEATS)
+        int totalSeats = bogies.stream()
+                .map(b -> b.capacity)      // extract capacity
+                .reduce(0, Integer::sum);  // sum all
 
-            for (Bogie b : groupedBogies.get(type)) {
-                System.out.println("  " + b);
-            }
-            System.out.println();
-        }
-
-        // 🔹 Check original list unchanged
-        System.out.println("Original Bogie List:");
-        for (Bogie b : bogies) {
-            System.out.println(b);
-        }
+        System.out.println("\nTotal Seating Capacity: " + totalSeats);
     }
 }
