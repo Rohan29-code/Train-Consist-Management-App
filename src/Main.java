@@ -1,41 +1,86 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class Train {
-    private List<String> bogies = new ArrayList<>();
+public class Main {
 
-    public void addBogie(String bogieId) {
-        bogies.add(bogieId);
+    public static void bubbleSort(int[] capacities) {
+        int n = capacities.length;
+        for (int i = 0; i < n - 1; i++) {
+            boolean swapped = false;
+            for (int j = 0; j < n - i - 1; j++) {
+                if (capacities[j] > capacities[j + 1]) {
+                    int temp = capacities[j];
+                    capacities[j] = capacities[j + 1];
+                    capacities[j + 1] = temp;
+                    swapped = true;
+                }
+            }
+            if (!swapped) break;
+        }
+        this.type = type;
+        this.capacity = capacity;
     }
 
-    public boolean searchBogie(String bogieId) {
-        if (bogies.isEmpty()) {
-            throw new IllegalStateException("Search failed: No bogies available in the train.");
-        }
-        return bogies.contains(bogieId);
+    public String getType() {
+        return type;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    @Override
+    public String toString() {
+        return "PassengerBogie{" +
+                "type='" + type + '\'' +
+                ", capacity=" + capacity +
+                '}';
     }
 }
 
-public class Main {
-    public static void main(String[] args) {
-        Train train = new Train();
+class GoodsBogie {
+    private String type;
+    private String cargo;
 
-        try {
-            System.out.println("Searching BG101...");
-            boolean found = train.searchBogie("BG101");
-            System.out.println("Result: " + found);
-        } catch (IllegalStateException e) {
-            System.out.println(e.getMessage());
+    public GoodsBogie(String type, String cargo) {
+        this.type = type;
+        this.cargo = cargo;
+    }
+
+        List<Bogie> bogies = new ArrayList<>();
+        bogies.add(new Bogie("Sleeper", 72));
+        bogies.add(new Bogie("AC Chair", 56));
+        bogies.add(new Bogie("First Class", 48));
+        bogies.add(new Bogie("Executive AC", 80));
+        bogies.add(new Bogie("Sleeper", 65));
+
+        // Original List
+        System.out.println("\nOriginal Bogie List:");
+        bogies.forEach(System.out::println);
+
+        // UC8: Filtering
+        List<Bogie> filteredBogies = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
+
+        System.out.println("\nFiltered Bogies (Capacity > 60):");
+        filteredBogies.forEach(System.out::println);
+
+        // UC9: Grouping
+        Map<String, List<Bogie>> groupedBogies =
+                bogies.stream()
+                        .collect(Collectors.groupingBy(Bogie::getType));
+
+        System.out.println("\nGrouped Bogies by Type:");
+        for (String type : groupedBogies.keySet()) {
+            System.out.println("Type: " + type);
+            groupedBogies.get(type).forEach(b -> System.out.println("  " + b));
         }
 
-        train.addBogie("BG101");
-        train.addBogie("BG205");
-        train.addBogie("BG309");
-
-        try {
-            System.out.println("Searching BG205...");
-            boolean found = train.searchBogie("BG205");
-            System.out.println("Result: " + found);
+        // UC10: Reduce (Total Seats)
+        int totalSeats = bogies.stream()
+                .map(b -> b.capacity)
+                .reduce(0, Integer::sum);
 
             System.out.println("Searching BG999...");
             boolean notFound = train.searchBogie("BG999");
