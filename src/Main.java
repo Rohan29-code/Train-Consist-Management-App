@@ -1,20 +1,20 @@
-import java.util.*;
-import java.util.regex.*;
-import java.util.stream.Collectors;
+import java.util.Scanner;
 
-class InvalidCapacityException extends Exception {
-    public InvalidCapacityException(String message) {
-        super(message);
-    }
-}
+public class Main {
 
-class PassengerBogie {
-    private String type;
-    private int capacity;
-
-    public PassengerBogie(String type, int capacity) throws InvalidCapacityException {
-        if (capacity <= 0) {
-            throw new InvalidCapacityException("Capacity must be greater than zero");
+    public static void bubbleSort(int[] capacities) {
+        int n = capacities.length;
+        for (int i = 0; i < n - 1; i++) {
+            boolean swapped = false;
+            for (int j = 0; j < n - i - 1; j++) {
+                if (capacities[j] > capacities[j + 1]) {
+                    int temp = capacities[j];
+                    capacities[j] = capacities[j + 1];
+                    capacities[j + 1] = temp;
+                    swapped = true;
+                }
+            }
+            if (!swapped) break;
         }
         this.type = type;
         this.capacity = capacity;
@@ -81,6 +81,6 @@ class GoodsBogie {
                 .map(b -> b.capacity)
                 .reduce(0, Integer::sum);
 
-        System.out.println("Validation complete. Proceeding with train operations...");
+        sc.close();
     }
 }
