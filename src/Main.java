@@ -1,49 +1,28 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void bubbleSort(int[] capacities) {
-        int n = capacities.length;
-        for (int i = 0; i < n - 1; i++) {
-            boolean swapped = false;
-            for (int j = 0; j < n - i - 1; j++) {
-                if (capacities[j] > capacities[j + 1]) {
-                    int temp = capacities[j];
-                    capacities[j] = capacities[j + 1];
-                    capacities[j + 1] = temp;
-                    swapped = true;
-                }
-            }
-            if (!swapped) break;
-        }
-    }
-
-    public static void displayArray(int[] capacities) {
-        for (int cap : capacities) {
-            System.out.print(cap + " ");
-        }
-        System.out.println();
-    }
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Enter number of passenger bogies:");
+        System.out.println("Enter number of bogies:");
         int n = sc.nextInt();
+        sc.nextLine();
 
-        int[] capacities = new int[n];
-        System.out.println("Enter capacities of passenger bogies:");
+        String[] bogieNames = new String[n];
+        System.out.println("Enter bogie type names:");
         for (int i = 0; i < n; i++) {
-            capacities[i] = sc.nextInt();
+            bogieNames[i] = sc.nextLine();
         }
 
-        System.out.println("Original Capacities:");
-        displayArray(capacities);
+        System.out.println("Original Bogie Names:");
+        System.out.println(Arrays.toString(bogieNames));
 
-        bubbleSort(capacities);
+        Arrays.sort(bogieNames);
 
-        System.out.println("Sorted Capacities (Ascending):");
-        displayArray(capacities);
+        System.out.println("Sorted Bogie Names (Alphabetical):");
+        System.out.println(Arrays.toString(bogieNames));
 
         sc.close();
     }
