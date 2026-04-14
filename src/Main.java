@@ -1,5 +1,5 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -82,6 +82,11 @@ class GoodsBogie {
                 .map(b -> b.capacity)
                 .reduce(0, Integer::sum);
 
-        sc.close();
+            System.out.println("Searching BG999...");
+            boolean notFound = train.searchBogie("BG999");
+            System.out.println("Result: " + notFound);
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
