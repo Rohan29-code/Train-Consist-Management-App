@@ -1,48 +1,47 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Main {
+class Train {
+    private List<String> bogies = new ArrayList<>();
 
-    public static boolean binarySearch(String[] bogies, String key) {
-        if (bogies == null || bogies.length == 0) {
-            return false;
-        }
-
-        Arrays.sort(bogies);
-
-        int low = 0;
-        int high = bogies.length - 1;
-
-        while (low <= high) {
-            int mid = (low + high) / 2;
-            int comparison = key.compareTo(bogies[mid]);
-
-            if (comparison == 0) {
-                return true;
-            } else if (comparison < 0) {
-                high = mid - 1;
-            } else {
-                low = mid + 1;
-            }
-        }
-        return false;
+    public void addBogie(String bogieId) {
+        bogies.add(bogieId);
     }
 
+    public boolean searchBogie(String bogieId) {
+        if (bogies.isEmpty()) {
+            throw new IllegalStateException("Search failed: No bogies available in the train.");
+        }
+        return bogies.contains(bogieId);
+    }
+}
+
+public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String[] bogieIDs = {"BG101","BG205","BG309","BG412","BG550"};
+        Train train = new Train();
 
-        System.out.println("Enter Bogie ID to search:");
-        String searchKey = sc.nextLine();
-
-        boolean result = binarySearch(bogieIDs, searchKey);
-
-        if (result) {
-            System.out.println("Bogie ID " + searchKey + " found!");
-        } else {
-            System.out.println("Bogie ID " + searchKey + " not found.");
+        try {
+            System.out.println("Searching BG101...");
+            boolean found = train.searchBogie("BG101");
+            System.out.println("Result: " + found);
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
         }
 
-        sc.close();
+        train.addBogie("BG101");
+        train.addBogie("BG205");
+        train.addBogie("BG309");
+
+        try {
+            System.out.println("Searching BG205...");
+            boolean found = train.searchBogie("BG205");
+            System.out.println("Result: " + found);
+
+            System.out.println("Searching BG999...");
+            boolean notFound = train.searchBogie("BG999");
+            System.out.println("Result: " + notFound);
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
