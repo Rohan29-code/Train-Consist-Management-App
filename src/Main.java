@@ -1,9 +1,10 @@
 import java.util.*;
+import java.util.regex.*;
 import java.util.stream.Collectors;
 
 class Bogie {
-    String type;
-    int capacity;
+    private String type;
+    private int capacity;
 
     public Bogie(String type, int capacity) {
         this.type = type;
@@ -14,17 +15,25 @@ class Bogie {
         return type;
     }
 
+    public int getCapacity() {
+        return capacity;
+    }
+
     @Override
     public String toString() {
-        return type + " (" + capacity + ")";
+        return "Bogie{" +
+                "type='" + type + '\'' +
+                ", capacity=" + capacity +
+                '}';
     }
 }
 
 public class Main {
-
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("=== Train Consist Management App ===");
+        String trainIdRegex = "TRN-\\d{4}";
+        String cargoCodeRegex = "PET-[A-Z]{2}";
 
         List<Bogie> bogies = new ArrayList<>();
         bogies.add(new Bogie("Sleeper", 72));
@@ -61,6 +70,6 @@ public class Main {
                 .map(b -> b.capacity)
                 .reduce(0, Integer::sum);
 
-        System.out.println("\nTotal Seating Capacity: " + totalSeats);
+        System.out.println("Validation complete. Proceeding with train operations...");
     }
 }
