@@ -2,11 +2,20 @@ import java.util.*;
 import java.util.regex.*;
 import java.util.stream.Collectors;
 
-class Bogie {
+class InvalidCapacityException extends Exception {
+    public InvalidCapacityException(String message) {
+        super(message);
+    }
+}
+
+class PassengerBogie {
     private String type;
     private int capacity;
 
-    public Bogie(String type, int capacity) {
+    public PassengerBogie(String type, int capacity) throws InvalidCapacityException {
+        if (capacity <= 0) {
+            throw new InvalidCapacityException("Capacity must be greater than zero");
+        }
         this.type = type;
         this.capacity = capacity;
     }
@@ -21,7 +30,7 @@ class Bogie {
 
     @Override
     public String toString() {
-        return "Bogie{" +
+        return "PassengerBogie{" +
                 "type='" + type + '\'' +
                 ", capacity=" + capacity +
                 '}';
